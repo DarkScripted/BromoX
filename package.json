@@ -9,6 +9,6 @@
   "author": "DarkScripted",
   "license": "UNLICENSED",
   "dependencies": {
-    "discord.js": "^14.3.0"
+    "discord.js": "^14.12.1"
   }
 }
