@@ -1,10 +1,10 @@
 "use strict";
 
-export function Log (type, denied, author, content) {
+function log (type, denied, author, content) {
     console.log(`[${type}] ${author.username}#${author.discriminator}|${author.id}> ${content}`)
 }
 
-export function LogCommand (interaction){
+export async function LogCommand (interaction){
     let finalstr = "";
     for (const opt of interaction.options.data){
         finalstr += `(${opt.name}: ${opt.value})`
@@ -12,7 +12,7 @@ export function LogCommand (interaction){
     Log("Command Execute", false, interaction.user, finalstr)
 }
 
-export function LogMessage (message) {
+export async function LogMessage (message) {
     let miscstr = message.content
     for (const obj of message.attachments) {
         miscstr += ` (file: ${obj[1].name})`
@@ -20,6 +20,6 @@ export function LogMessage (message) {
     Log("Message", false, message.author, miscstr)
 }
 
-export function LogButton (interaction) {
+export async function LogButton (interaction) {
     Log("Button", false, interaction.user, interaction.customId)
 }
