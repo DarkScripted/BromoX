@@ -9,7 +9,7 @@ export async function LogCommand (interaction){
     for (const opt of interaction.options.data){
         finalstr += `(${opt.name}: ${opt.value})`
     }
-    Log("Command Execute", false, interaction.user, finalstr)
+    log("Command Execute", false, interaction.user, finalstr)
 }
 
 export async function LogMessage (message) {
@@ -17,9 +17,9 @@ export async function LogMessage (message) {
     for (const obj of message.attachments) {
         miscstr += ` (file: ${obj[1].name})`
     }
-    Log("Message", false, message.author, miscstr)
+    log("Message", false, message.author, miscstr)
 }
 
 export async function LogButton (interaction) {
-    Log("Button", false, interaction.user, interaction.customId)
+    log("Button", false, interaction.user, interaction.customId)
 }
