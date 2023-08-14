@@ -1,35 +1,34 @@
 "use strict";
-const fs = require('fs');
-const { Client, Collection, GatewayIntentBits, ActivityType, PresenceUpdateStatus } = require('discord.js');
-const { token } = require('./config.json');
-const { errorEmbed, newEmbed } = require('./utils/meta.js');
-const { cooldown, cooldownGC, cdInterval, cdLog } = require("./cooldown/cooldown.js")
-const { deniedEmbed, premiumEmbed, isPremium } = require("./premium/premium.js")
-const { LogCommand, LogMessage, LogButton } = require("./utils/logging.js")
+import * as fs from 'fs';
+import { Client, Collection, GatewayIntentBits, ActivityType, PresenceUpdateStatus } from "discord.js";
+import { errorEmbed, newEmbed } from "./utils/meta.js";
+import { cooldown, cooldownGC, cdInterval, cdLog } from "./cooldown/cooldown.js";
+import { notPremiumEmbed, isPremium } from "./premium/premium.js";
+import { LogCommand, LogMessage, LogButton } from "./utils/logging.js";
+import config from './config.json' assert {"type": "json"};
+
 const client = new Client({
 	intents:[
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.MessageContent
-	]
+	],
 });
-const msgTriggers = [], buttonInteraction = {};
-
-
 client.commands = new Collection();
+const msgTriggers = [], buttonInteraction = {};
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
 
 // register commands and events
 for (const file of commandFiles) {
-	const c = require(`./commands/${file}`);
-	client.commands.set(c.data.name, c);
-	if (c.hasOwnProperty('triggerRegexp')) {
-		msgTriggers.push(c.data.name)
+	const commandFile = await import(`./commands/${file}`);
+	client.commands.set(commandFile.command.data.name, commandFile.command);
+	
+	if (commandFile.command.hasOwnProperty('triggerRegexp')) {
+		msgTriggers.push(commandFile.command.data.name)
 	}
-	if (c.hasOwnProperty('buttons')) {
-		for (const id in c.buttons) {
-			buttonInteraction[id] = c.data.name
+	if (commandFile.command.hasOwnProperty('buttons')) {
+		for (const id in commandFile.command.buttons) {
+			buttonInteraction[id] = commandFile.command.data.name
 		}
 	}
 }
@@ -40,18 +39,9 @@ client.once('ready', () => {
 		type: ActivityType.Watching,
 	})
 	client.user.setStatus(PresenceUpdateStatus.DoNotDisturb);
-	console.log(buttonInteraction)
 	console.log('Ready!');
 });
 
-function notPremiumEmbed(premiumLevel, embed) {
-	switch (premiumLevel) {
-		case 0:
-			return premiumEmbed(embed)
-		case 1 || 3:
-			return deniedEmbed(embed)
-	}
-}
 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
@@ -125,4 +115,4 @@ client.on('interactionCreate', async interaction => {
 setInterval(cooldownGC, cdInterval)
 //setInterval(cdLog, 500)
 
-client.login(token);
+client.login(config.token);

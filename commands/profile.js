@@ -1,13 +1,12 @@
 "use strict";
-const { ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, ButtonStyle } = require('discord.js');
-const { getUser } = require('../utils/getfromapi.js');
-const { errorEmbed, newEmbed } = require('../utils/meta.js');
-const { userRegexp, userRegexpStrict } = require("../regexp/parse.js")
-const { invalidUsername } = require('../utils/invalid.js');
-const { sleep } = require('../utils/utils.js');
+import { ActionRowBuilder, ButtonBuilder, SlashCommandBuilder, ButtonStyle } from "discord.js";
+import { getUser } from "../utils/getfromapi.js";
+import { errorEmbed, newEmbed } from "../utils/meta.js";
+import { userRegexp, userRegexpStrict } from "../regexp/parse.js";
+import { invalidUsername } from "../utils/invalid.js";
+import { sleep } from "../utils/utils.js";
 
-
-module.exports = {
+export const command = {
     data: new SlashCommandBuilder()
         .setName('profile')
         .setDescription('Obtener un perfíl con el link o username de este.')

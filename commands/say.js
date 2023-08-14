@@ -1,8 +1,8 @@
 "use strict";
-const { SlashCommandBuilder } = require('discord.js');
-const { errorEmbed } = require('../utils/meta.js');
+import { SlashCommandBuilder } from "discord.js";
+import { errorEmbed } from "../utils/meta.js";
 
-module.exports = {
+export const command = {
     data: new SlashCommandBuilder()
         .setName('say')
         .setDescription('Solo para los creadores del bot.')

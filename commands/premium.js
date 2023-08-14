@@ -1,9 +1,9 @@
 "use strict";
-const { EmbedBuilder, SlashCommandBuilder} = require('discord.js');
-const { privilegedServers, btc_address } = require('../config.json');
-const { errorEmbed, newEmbed } = require('../utils/meta.js');
+import { EmbedBuilder, SlashCommandBuilder} from "discord.js";
+import { errorEmbed, newEmbed } from "../utils/meta.js";
+import config from '../config.json' assert {"type": "json"};
 
-module.exports = {
+export const command = {
     data: new SlashCommandBuilder()
         .setName('premium')
         .setDescription('Da información sobre BromoX Premium o para comprar este.')
@@ -25,7 +25,7 @@ module.exports = {
             }          
             return
         }
-        if (interaction.guild.id in privilegedServers){
+        if (interaction.guild.id in config.privilegedServers){
              await interaction.reply({ embeds: [errorEmbed("¿?", "Este servidor parece ya ser premium...")] });
              return;
         }
@@ -56,7 +56,7 @@ function premiumEmbed(eur, btc) {
             { name: 'Funciones', value: "-Borrar memes de mierda\n-Borrar comentarios sin valor\n-Banear usuarios gilipollas\n-Votar memes y comentarios con +500 votos\n-Aprobar o rechazar memes en moderación\n-Remover cooldown del bot", },
             { name: '¿Como pagar?', value: `Con tu wallet favorita, puedes enviar ${eur}EUR a una de las direcciones que aparezcan abajo, y cuando lo hayas enviado, corres este mismo comando con el parametro "transaction_id" y en este pones la ID de transacción.` },
             { name: 'Cosas a tomar en cuenta', value: "-La cantidad a pagar depende de la cantidad de usuarios del servidor\n-No se acepta PayPal porque PayPal es maricón\n-No se acepta pagar con multiples cryptos para una sola transacción\n-No hay reembolsos\n-No se aceptan NFTs\n-La ID de transacción va a ligarse al server una vez sea introducida.".toString() },
-            { name: `Dirección de Bitcoin (${eur}€/${btc}₿)`, value: `\`\`\`${btc_address}\`\`\`` },
+            { name: `Dirección de Bitcoin (${eur}€/${btc}₿)`, value: `\`\`\`${config.btc_address}\`\`\`` },
         )
 
     return embed

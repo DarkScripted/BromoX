@@ -1,10 +1,9 @@
 "use strict";
-const { SlashCommandBuilder } = require('discord.js');
-const { errorEmbed } = require('../utils/meta.js');
-const { sleep } = require('../utils/utils.js');
+import { SlashCommandBuilder } from "discord.js";
+import { errorEmbed } from "../utils/meta.js";
+import { sleep } from "../utils/utils.js";
 
-
-module.exports = {
+export const command = {
     data: new SlashCommandBuilder()
         .setName('delete')
         .setDescription('Elimina los objetos especificados.')

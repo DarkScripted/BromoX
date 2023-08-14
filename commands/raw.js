@@ -1,13 +1,11 @@
 "use strict";
-const { SlashCommandBuilder } = require('discord.js');
+import { SlashCommandBuilder } from "discord.js";
+import { getMeme } from "../utils/getfromapi.js";
+import { errorEmbed } from "../utils/meta.js";
+import { userRegexp, memeRegexp, idRegexp } from "../regexp/parse.js";
+import { invalidMeme, invalidUsername } from "../utils/invalid.js";
 
-const { getMeme } = require('../utils/getfromapi.js');
-const { errorEmbed } = require('../utils/meta.js');
-const { userRegexp, memeRegexp, idRegexp } = require("../regexp/parse.js")
-const { invalidMeme, invalidUsername } = require('../utils/invalid.js');
-
-
-module.exports = {
+export const command = {
     data: new SlashCommandBuilder()
         .setName('raw')
         .setDescription('Obtiene el link de la imagen/video de algún objeto.')

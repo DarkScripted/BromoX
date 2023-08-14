@@ -1,17 +1,12 @@
 // Poorly made cooldown as i couldn't find one that did exactly what I wanted
 "use strict";
-const talkedRecently = new Object();
-const msgLimit = 3
-const cdTime = 5e3
 
-module.exports = {
-    "cdInterval": 5e3,
-    "cooldown": cooldown,
-    "cooldownGC": cooldownGC,
-    "cdLog": log,
-}
+export const talkedRecently = new Object();
+export const msgLimit = 3
+export const cdTime = 5e3
+export const cdInterval = 5e3
 
-function cooldown(userid) {
+export function cooldown(userid) {
     // returns true if user haves down sindrome
     if (!(userid in talkedRecently)) {
         talkedRecently[userid] = { "interaction": 0, "muted": null }
@@ -25,7 +20,7 @@ function cooldown(userid) {
     return false;
 }
 
-async function cooldownGC() {
+export async function cooldownGC() {
     for (const id in talkedRecently) {
         if (!talkedRecently[id].muted || talkedRecently[id].muted < Date.now()) {
             delete talkedRecently[id];   // removes the user from the array
@@ -33,6 +28,6 @@ async function cooldownGC() {
     }
 }
 
-async function log(){
+export async function cdLog() {
     console.log(talkedRecently)
 }

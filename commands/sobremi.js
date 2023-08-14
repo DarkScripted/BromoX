@@ -1,8 +1,8 @@
 "use strict";
-const { SlashCommandBuilder } = require("discord.js");
-const { newEmbed } = require('../utils/meta.js');
+import { SlashCommandBuilder } from "discord.js";
+import { newEmbed } from "../utils/meta.js";
 
-module.exports = {
+export const command = {
 	data: new SlashCommandBuilder()
 		.setName('sobremi')
 		.setDescription('Información miscelanea sobre BromoX.'),

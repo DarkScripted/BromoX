@@ -1,14 +1,13 @@
 "use strict";
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder  } = require('discord.js');
-const { getMeme } = require('../utils/getfromapi.js');
-const { errorEmbed, newEmbed } = require('../utils/meta.js');
-const { memeRegexpStrict, memeRegexp, idRegexp } = require("../regexp/parse.js")
-const { unix2time } = require('../utils/utils.js');
-const { invalidMeme } = require('../utils/invalid.js');
-const { sleep } = require('../utils/utils.js');
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder  } from "discord.js";
+import { getMeme } from "../utils/getfromapi.js";
+import { errorEmbed, newEmbed } from "../utils/meta.js";
+import { memeRegexpStrict, memeRegexp, idRegexp } from "../regexp/parse.js";
+import { unix2time } from "../utils/utils.js";
+import { invalidMeme } from "../utils/invalid.js";
+import { sleep } from "../utils/utils.js";
 
-
-module.exports = {
+export const command = {
 	data: new SlashCommandBuilder()
 		.setName('meme')
 		.setDescription('Obtener un meme con el link o la ID de este.')
